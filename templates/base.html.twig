@@ -1,0 +1,89 @@
+<html lang="es">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
+    {% block stylesheets %}
+    {#{{ encore_entry_link_tags('app') }}#}
+    {% endblock %}
+    <style>
+        .icons-home{
+            font-size: 7rem !important;
+            color: #26847E;
+        }
+        .icons-redes{
+            font-size: 1.5rem !important;
+            background-color: #1e68a9;
+            padding: 19px;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            color: white;
+            line-height: 50%;
+        }
+    </style>
+    <title>{% block title %}Welcome!{% endblock %}</title>
+  </head>
+  <body>
+    <div class="row">
+        <center>
+            <img style="width: 20.5rem;" src="{{ asset('images/logo.png') }}" alt="">
+        </center>
+    </div>
+    <br>
+    <br>
+    <div class="container">
+        {% block body %}
+    
+        {% endblock %}
+    </div>
+   
+    <script type="text/javascript" charset="utf8" src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js" integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf" crossorigin="anonymous"></script>
+    <script src="https://use.fontawesome.com/c1a27fb5a2.js"></script>
+    {% block javascripts %}
+    {% endblock %}
+  </body>
+  <br>
+  <footer>
+      <div class="row" style="    padding: 2rem;
+      background-color: #e7e7e7;
+      color: #5d5d5d;
+      text-align: center;">
+        <div class="col-12 col-lg-4">
+            <h5>Nuestro equipo</h5>
+            <p>
+                correos
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Sequi quis quia nesciunt minima, eaque quas, accusamus quam dolores blanditiis eius temporibus facere? Temporibus voluptatibus, doloribus expedita consectetur delectus rerum ex!
+            </p>
+        </div>
+        <div class="col-12 col-lg-4">
+            <h5>Nuestro equipo</h5>
+            <p>
+                correos
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Sequi quis quia nesciunt minima, eaque quas, accusamus quam dolores blanditiis eius temporibus facere? Temporibus voluptatibus, doloribus expedita consectetur delectus rerum ex!
+            </p>
+        </div>
+        <div class="col-12 col-lg-4">
+            &copy; {{ "now"|date("Y") }} CheckIt 360Net
+            <br>
+            <br>
+            <br>
+            <div class="row">
+                <div class="col-4">
+                    <i class="fa fa-facebook icons-redes" aria-hidden="true"></i>
+                </div>
+                <div class="col-4">
+                    <i class="fa fa-twitter icons-redes" aria-hidden="true"></i>
+                </div>
+                <div class="col-4">
+                    <i class="fa fa-envelope icons-redes" aria-hidden="true"></i>
+                </div>
+            </div>
+        </div>
+      </div>
+  </footer>
+</html>
