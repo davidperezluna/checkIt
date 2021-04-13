@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\DepartamentoRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -26,6 +28,21 @@ class Departamento
      * @ORM\Column(type="string", length=255)
      */
     private $nombre;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Municipio::class, mappedBy="departamento")
+     */
+    private $municipios;
+
+    public function __toString()
+    {
+        return $this->nombre;
+    }
+
+    public function __construct()
+    {
+        $this->municipios = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -52,6 +69,36 @@ class Departamento
     public function setNombre(string $nombre): self
     {
         $this->nombre = $nombre;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Municipio[]
+     */
+    public function getMunicipios(): Collection
+    {
+        return $this->municipios;
+    }
+
+    public function addMunicipio(Municipio $municipio): self
+    {
+        if (!$this->municipios->contains($municipio)) {
+            $this->municipios[] = $municipio;
+            $municipio->setDepartamento($this);
+        }
+
+        return $this;
+    }
+
+    public function removeMunicipio(Municipio $municipio): self
+    {
+        if ($this->municipios->removeElement($municipio)) {
+            // set the owning side to null (unless already changed)
+            if ($municipio->getDepartamento() === $this) {
+                $municipio->setDepartamento(null);
+            }
+        }
 
         return $this;
     }
