@@ -15,6 +15,11 @@ use App\Entity\TipoMovimiento;
 use App\Entity\TipoVehiculo;
 use App\Entity\EstadoPedido;
 use App\Entity\TipoIdentificacion;
+use App\Entity\Vehiculo;
+use App\Entity\Bodega;
+use App\Entity\Cliente;
+use App\Entity\Producto;
+use App\Entity\Stock;
 
 class DashboardController extends AbstractDashboardController
 {
@@ -43,5 +48,10 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToCrud('Estados Pedido', 'fa fa-user', EstadoPedido::Class);
         yield MenuItem::linkToCrud('Tipo Movimiento', 'fa fa-user', TipoMovimiento::Class);
         yield MenuItem::linkToCrud('Tipo Vehiculo', 'fa fa-user', TipoVehiculo::Class);
+        yield MenuItem::linkToCrud('Vehiculo', 'fa fa-user', Vehiculo::Class);
+        yield MenuItem::linkToCrud('Bodega', 'fa fa-user', Bodega::Class);
+        yield MenuItem::linkToCrud('Cliente', 'fa fa-user', Cliente::Class);
+        yield MenuItem::linkToCrud('Producto', 'fa fa-user', Producto::Class);
+        yield MenuItem::linkToCrud('Stock', 'fa fa-user', Stock::Class);
     }
 }

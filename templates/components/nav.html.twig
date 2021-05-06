@@ -1,0 +1,41 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#"> <img style="width: 10rem;" src="{{ asset('images/logo.png') }}" alt=""></a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="{{ path('home') }}">Inicio</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{ path('producto') }}">Nuestros Productos</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{ path('home') }}">Quienes somos</a>
+          </li>
+          {% if app.user %}
+          <li class="nav-item d-flex">
+            <a class="nav-link" href="{{ path('producto') }}">{{ app.user.nombres }}</a>
+          </li>
+          <li class="nav-item d-flex">
+            <a class="nav-link" href="{{ path('app_logout') }}">Logout</a>
+          </li>
+          {% else %}
+          <li class="nav-item d-flex">
+            <a class="nav-link" href="{{ path('app_login') }}">Login</a>
+          </li>
+          <li class="nav-item d-flex">
+            <a class="nav-link" href="{{ path('home') }}">Registro</a>
+          </li>
+          {% endif %}
+          
+        </ul>
+        <form class="d-flex" action="{{ path('search_producto') }}" method="POST">
+          <input name="stringBusqueda" class="form-control me-2" type="search" placeholder="Buscar" aria-label="Search">
+          <button class="btn btn-outline-success" type="submit">Buscar</button>
+        </form>
+      </div>
+    </div>
+  </nav>

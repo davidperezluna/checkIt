@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\MunicipioRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -31,6 +33,21 @@ class Municipio
      * @ORM\ManyToOne(targetEntity=Departamento::class, inversedBy="municipios")
      */
     private $departamento;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Bodega::class, mappedBy="municipio")
+     */
+    private $bodegas;
+
+    public function __toString()
+    {
+        return $this->codigo ." ". $this->nombre;
+    }
+
+    public function __construct()
+    {
+        $this->bodegas = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -69,6 +86,36 @@ class Municipio
     public function setDepartamento(?Departamento $departamento): self
     {
         $this->departamento = $departamento;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Bodega[]
+     */
+    public function getBodegas(): Collection
+    {
+        return $this->bodegas;
+    }
+
+    public function addBodega(Bodega $bodega): self
+    {
+        if (!$this->bodegas->contains($bodega)) {
+            $this->bodegas[] = $bodega;
+            $bodega->setMunicipio($this);
+        }
+
+        return $this;
+    }
+
+    public function removeBodega(Bodega $bodega): self
+    {
+        if ($this->bodegas->removeElement($bodega)) {
+            // set the owning side to null (unless already changed)
+            if ($bodega->getMunicipio() === $this) {
+                $bodega->setMunicipio(null);
+            }
+        }
 
         return $this;
     }

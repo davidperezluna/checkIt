@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Nuestros productos!{% endblock %}
+
+{% block body %}
+<center>
+<h1>Buscando: "{{ stringBusqueda }}"</h1></center>
+<hr>
+<div class="row">
+    {% if productos %}
+        {% for producto in productos %}
+        <div class="col-3">
+            <div class="card">
+                <img src="{{ asset('uploads/' ~ producto.imagen) }}" class="card-img-top" alt="{{ producto.nombre }}">
+                <div class="card-body">
+                <h5 class="card-title">{{ producto.nombre }}<small> ${{ producto.precio |number_format(0, ',', '.')  }} COP </small></h5>
+                <div class="card-text ellipsis">{{ producto.descripcion|raw|nl2br }}</div>
+                <center>
+                    <div> en stock: {{producto.cantidad}} </div>
+                </center>
+                <a href="{{ path('producto_show', {'id': producto.id}) }}" class="btn btn-outline-primary"><i class="fa fa-search-plus" aria-hidden="true"></i></a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+        {% else %}
+        <div class="col-12">
+            <div class="alert alert-warning">
+                No existen productos que coincidan con la busqueda {{stringBusqueda}}
+            </div>
+        </div> 
+    {% endif %}
+    
+</div>
+
+{% endblock %}

@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 
@@ -54,6 +56,40 @@ class User implements UserInterface
      * @ORM\Column(type="string", length=15)
      */
     private $telefono;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=TipoIdentificacion::class, inversedBy="users")
+     */
+    private $tipoIdentificacion;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Vehiculo::class, mappedBy="conductor")
+     */
+    private $vehiculos;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Bodega::class, mappedBy="responzable")
+     */
+    private $bodegas;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Cliente::class, mappedBy="responzable")
+     */
+    private $clientes;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Stock::class, mappedBy="usuario")
+     */
+    private $stocks;
+
+    public function __construct()
+    {
+        $this->vehiculos = new ArrayCollection();
+        $this->bodegas = new ArrayCollection();
+        $this->clientes = new ArrayCollection();
+        $this->stocks = new ArrayCollection();
+    }
+
 
     public function getId(): ?int
     {
@@ -186,4 +222,142 @@ class User implements UserInterface
 
         return $this;
     }
+
+    public function getTipoIdentificacion(): ?TipoIdentificacion
+    {
+        return $this->tipoIdentificacion;
+    }
+
+    public function setTipoIdentificacion(?TipoIdentificacion $tipoIdentificacion): self
+    {
+        $this->tipoIdentificacion = $tipoIdentificacion;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Vehiculo[]
+     */
+    public function getVehiculos(): Collection
+    {
+        return $this->vehiculos;
+    }
+
+    public function addVehiculo(Vehiculo $vehiculo): self
+    {
+        if (!$this->vehiculos->contains($vehiculo)) {
+            $this->vehiculos[] = $vehiculo;
+            $vehiculo->setConductor($this);
+        }
+
+        return $this;
+    }
+
+    public function removeVehiculo(Vehiculo $vehiculo): self
+    {
+        if ($this->vehiculos->removeElement($vehiculo)) {
+            // set the owning side to null (unless already changed)
+            if ($vehiculo->getConductor() === $this) {
+                $vehiculo->setConductor(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function __toString()
+    {
+        return $this->cedula ." ". $this->nombres ." ". $this->apellidos;
+    }
+
+    /**
+     * @return Collection|Bodega[]
+     */
+    public function getBodegas(): Collection
+    {
+        return $this->bodegas;
+    }
+
+    public function addBodega(Bodega $bodega): self
+    {
+        if (!$this->bodegas->contains($bodega)) {
+            $this->bodegas[] = $bodega;
+            $bodega->setResponzable($this);
+        }
+
+        return $this;
+    }
+
+    public function removeBodega(Bodega $bodega): self
+    {
+        if ($this->bodegas->removeElement($bodega)) {
+            // set the owning side to null (unless already changed)
+            if ($bodega->getResponzable() === $this) {
+                $bodega->setResponzable(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Cliente[]
+     */
+    public function getClientes(): Collection
+    {
+        return $this->clientes;
+    }
+
+    public function addCliente(Cliente $cliente): self
+    {
+        if (!$this->clientes->contains($cliente)) {
+            $this->clientes[] = $cliente;
+            $cliente->setResponzable($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCliente(Cliente $cliente): self
+    {
+        if ($this->clientes->removeElement($cliente)) {
+            // set the owning side to null (unless already changed)
+            if ($cliente->getResponzable() === $this) {
+                $cliente->setResponzable(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Stock[]
+     */
+    public function getStocks(): Collection
+    {
+        return $this->stocks;
+    }
+
+    public function addStock(Stock $stock): self
+    {
+        if (!$this->stocks->contains($stock)) {
+            $this->stocks[] = $stock;
+            $stock->setUsuario($this);
+        }
+
+        return $this;
+    }
+
+    public function removeStock(Stock $stock): self
+    {
+        if ($this->stocks->removeElement($stock)) {
+            // set the owning side to null (unless already changed)
+            if ($stock->getUsuario() === $this) {
+                $stock->setUsuario(null);
+            }
+        }
+
+        return $this;
+    }
+
 }
