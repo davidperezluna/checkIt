@@ -30,6 +30,37 @@ class PedidoController extends AbstractController
     }
 
     /**
+     * @Route("/index/by/cliente", name="pedido_index_cliente", methods={"GET"})
+     */
+    public function indexByCliente(): Response
+    {
+        $pedidoRepository = $this->getDoctrine()->getRepository(Pedido::class);
+        $pedidos = $pedidoRepository->findByClienteResponzable($this->getUser()->getId());
+        return $this->render('pedido/index.html.twig', [
+            'pedidos' => $pedidos,
+        ]);
+    }
+
+     /**
+     * @Route("/tramitar/pedido/{id}", name="tramitar_pedido", methods={"GET"})
+     */
+    public function tramitarPedido($id): Response
+    {
+
+        $em = $this->getDoctrine()->getManager();
+        $pedidoRepository = $this->getDoctrine()->getRepository(Pedido::class);
+        $estadoPedidoRepository = $this->getDoctrine()->getRepository(EstadoPedido::class);
+        $pedido = $pedidoRepository->find($id);
+        $estadoPedido = $estadoPedidoRepository->find(3); 
+        $pedido->setEstadoPedido($estadoPedido);
+
+        $em->flush($pedido);
+        return $this->render('pedido/show.html.twig', [
+            'pedido' => $pedido,
+        ]);
+    }
+
+    /**
      * @Route("/new", name="pedido_new", methods={"POST"})
      */
     public function new(Request $request): Response
@@ -50,15 +81,18 @@ class PedidoController extends AbstractController
             )
         );
         $fecha = new \DateTime("now");
-
+        $fecha2 = date("Y-m-d", strtotime($fecha->format("Y-m-d").'+ 5 days'));
+        $fechaEntrega = new \DateTime($fecha2);
         if ($pedido) {
             $pedido->setCliente($cliente);
             $pedido->setFechaInicial($fecha);
         } else {
             $pedido = new Pedido();
             $pedido->setCliente($cliente);
+            $pedido->setClienteResponzable($cliente->getResponzable());
             $pedido->setFechaInicial($fecha);
-            $estadoPedido = $estadoPedidoRepository->find(2);
+            $pedido->setFechaEntrega($fechaEntrega);
+            $estadoPedido = $estadoPedidoRepository->find(2);    
             $pedido->setEstadoPedido($estadoPedido);
             $em->persist($pedido);
         }
@@ -67,6 +101,9 @@ class PedidoController extends AbstractController
         $productosPedido->setProducto($producto);
         $productosPedido->setCantidad($cantidad);
         $productosPedido->setPedido($pedido);
+
+        $nuevaCantidad = $producto->getCantidad() - $cantidad;
+        $producto->setCantidad($nuevaCantidad);
 
         $em->persist($productosPedido);
 

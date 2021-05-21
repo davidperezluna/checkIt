@@ -9,11 +9,11 @@
         <thead>
             <tr>
                 <th>Id</th>
-                <th>FechaInicial</th>
-                <th>FechaEntrega</th>
-                <th>AnotacionesCliente</th>
-                <th>AnotacionesPedido</th>
-                <th>actions</th>
+                <th>Fecha Inicial</th>
+                <th>Fecha Entrega</th>
+                <th>Cliente</th>
+                <th>Estado</th>
+                <th>Acciones</th>
             </tr>
         </thead>
         <tbody>
@@ -22,11 +22,10 @@
                 <td>{{ pedido.id }}</td>
                 <td>{{ pedido.fechaInicial ? pedido.fechaInicial|date('Y-m-d') : '' }}</td>
                 <td>{{ pedido.fechaEntrega ? pedido.fechaEntrega|date('Y-m-d') : '' }}</td>
-                <td>{{ pedido.anotacionesCliente }}</td>
-                <td>{{ pedido.anotacionesPedido }}</td>
+                <td>{{ pedido.cliente.nombre }}</td>
+                <td>{{ pedido.estadoPedido.nombre }}</td>
                 <td>
-                    <a href="{{ path('pedido_show', {'id': pedido.id}) }}">show</a>
-                    <a href="{{ path('pedido_edit', {'id': pedido.id}) }}">edit</a>
+                    <a class="btn btn-info" href="{{ path('pedido_show', {'id': pedido.id}) }}">Ver</a>
                 </td>
             </tr>
         {% else %}
@@ -36,6 +35,4 @@
         {% endfor %}
         </tbody>
     </table>
-
-    <a href="{{ path('pedido_new') }}">Create new</a>
 {% endblock %}

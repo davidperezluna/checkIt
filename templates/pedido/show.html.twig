@@ -12,27 +12,40 @@
                 <td>{{ pedido.id }}</td>
             </tr>
             <tr>
-                <th>FechaInicial</th>
+                <th>Fecha Inicial</th>
                 <td>{{ pedido.fechaInicial ? pedido.fechaInicial|date('Y-m-d') : '' }}</td>
             </tr>
             <tr>
-                <th>FechaEntrega</th>
+                <th>Fecha Entrega</th>
                 <td>{{ pedido.fechaEntrega ? pedido.fechaEntrega|date('Y-m-d') : '' }}</td>
             </tr>
             <tr>
-                <th>AnotacionesCliente</th>
-                <td>{{ pedido.anotacionesCliente }}</td>
-            </tr>
-            <tr>
-                <th>AnotacionesPedido</th>
-                <td>{{ pedido.anotacionesPedido }}</td>
+                <th>Anotaciones Cliente</th>
+                <td>{{ pedido.estadoPedido.nombre }}</td>
             </tr>
         </tbody>
     </table>
 
-    <a href="{{ path('pedido_index') }}">back to list</a>
+<div>
+    <center><h1> Productos asociados al pedido  </h1></center>
 
-    <a href="{{ path('pedido_edit', {'id': pedido.id}) }}">edit</a>
-
-    {{ include('pedido/_delete_form.html.twig') }}
+    {% for productoPedido in pedido.productosPedidos %}
+    <div class="col-2">
+        <div class="card">
+            <img src="{{ asset('uploads/' ~ productoPedido.producto.imagen) }}" class="card-img-top" alt="{{ productoPedido.producto.nombre }}">
+            <div class="card-body">
+              <h5 class="card-title">{{ productoPedido.producto.nombre }}<small> ${{ productoPedido.producto.precio |number_format(0, ',', '.')  }} COP </small></h5>
+              <center>
+                <div> cantidad: {{productoPedido.cantidad}} </div>
+              </center>
+            </div>
+          </div>
+    </div>
+    {% endfor %}
+</div>
+<div>
+{% if pedido.estadoPedido.id != 3 %}
+<center><a href="{{ path('tramitar_pedido', {'id': pedido.id}) }}" class="btn btn-primary btn-block btn-lg"> Tramitar pedido</a></center>
+{% endif %}
+</div>
 {% endblock %}

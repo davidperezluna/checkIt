@@ -59,6 +59,11 @@ class Pedido
      */
     private $estadoPedido;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="pedidos")
+     */
+    private $clienteResponzable;
+
     public function __construct()
     {
         $this->productosPedidos = new ArrayCollection();
@@ -179,6 +184,18 @@ class Pedido
     public function setCliente(?Cliente $cliente): self
     {
         $this->cliente = $cliente;
+
+        return $this;
+    }
+
+    public function getClienteResponzable(): ?User
+    {
+        return $this->clienteResponzable;
+    }
+
+    public function setClienteResponzable(?User $clienteResponzable): self
+    {
+        $this->clienteResponzable = $clienteResponzable;
 
         return $this;
     }

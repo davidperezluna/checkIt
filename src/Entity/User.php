@@ -82,12 +82,18 @@ class User implements UserInterface
      */
     private $stocks;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Pedido::class, mappedBy="clienteResponzable")
+     */
+    private $pedidos;
+
     public function __construct()
     {
         $this->vehiculos = new ArrayCollection();
         $this->bodegas = new ArrayCollection();
         $this->clientes = new ArrayCollection();
         $this->stocks = new ArrayCollection();
+        $this->pedidos = new ArrayCollection();
     }
 
 
@@ -354,6 +360,36 @@ class User implements UserInterface
             // set the owning side to null (unless already changed)
             if ($stock->getUsuario() === $this) {
                 $stock->setUsuario(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Pedido[]
+     */
+    public function getPedidos(): Collection
+    {
+        return $this->pedidos;
+    }
+
+    public function addPedido(Pedido $pedido): self
+    {
+        if (!$this->pedidos->contains($pedido)) {
+            $this->pedidos[] = $pedido;
+            $pedido->setClienteResponzable($this);
+        }
+
+        return $this;
+    }
+
+    public function removePedido(Pedido $pedido): self
+    {
+        if ($this->pedidos->removeElement($pedido)) {
+            // set the owning side to null (unless already changed)
+            if ($pedido->getClienteResponzable() === $this) {
+                $pedido->setClienteResponzable(null);
             }
         }
 

@@ -142,36 +142,6 @@ class Cliente
     }
 
     /**
-     * @return Collection|Carrito[]
-     */
-    public function getCarritos(): Collection
-    {
-        return $this->carritos;
-    }
-
-    public function addCarrito(Carrito $carrito): self
-    {
-        if (!$this->carritos->contains($carrito)) {
-            $this->carritos[] = $carrito;
-            $carrito->setCliente($this);
-        }
-
-        return $this;
-    }
-
-    public function removeCarrito(Carrito $carrito): self
-    {
-        if ($this->carritos->removeElement($carrito)) {
-            // set the owning side to null (unless already changed)
-            if ($carrito->getCliente() === $this) {
-                $carrito->setCliente(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
      * @return Collection|Pedido[]
      */
     public function getPedidos(): Collection
