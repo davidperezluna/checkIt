@@ -32,6 +32,11 @@ class ProductosPedido
      */
     private $cantidad;
 
+    public function __toString()
+    {
+        return $this->getProducto()->getRef()."-".$this->getProducto()->getNombre()."-Cantidad: ".$this->cantidad;
+    }
+
     public function getId(): ?int
     {
         return $this->id;

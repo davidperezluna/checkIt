@@ -44,6 +44,11 @@ class Vehiculo
      */
     private $pedidos;
 
+    public function __toString()
+    {
+        return $this->placa;
+    }
+
     public function __construct()
     {
         $this->pedidos = new ArrayCollection();

@@ -19,6 +19,7 @@ use App\Entity\Vehiculo;
 use App\Entity\Bodega;
 use App\Entity\Cliente;
 use App\Entity\Producto;
+use App\Entity\Pedido;
 use App\Entity\Stock;
 
 class DashboardController extends AbstractDashboardController
@@ -53,5 +54,6 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToCrud('Cliente', 'fa fa-user', Cliente::Class);
         yield MenuItem::linkToCrud('Producto', 'fa fa-user', Producto::Class);
         yield MenuItem::linkToCrud('Stock', 'fa fa-user', Stock::Class);
+        yield MenuItem::linkToCrud('Pedido', 'fa fa-user', Pedido::Class);
     }
 }
