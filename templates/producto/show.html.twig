@@ -28,11 +28,19 @@
         <p>
             {{ producto.descripcion|raw|nl2br }}
         </p>
+        {% if app.user %}
         <form action="{{ path('pedido_new') }}" method="POST">
             <input type="number" placeholder="cantidad" name="cantidad">
             <input type="hidden" name="productoId" value="{{ producto.id }}">
             <button type="submit" class="btn btn-outline-success"><i class="fa fa-shopping-basket" aria-hidden="true"></i></button>
-        </form>        
+        </form>
+        {% else %}
+        <div class="alert alert-danger" role="alert">
+            Por favor inicie sesion 
+        </div>   
+        {% endif %}
+        
+            
     </div>
 </div>
 
