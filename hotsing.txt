@@ -1,0 +1,13 @@
+URL panel de control cPanel: http://www.galeras360.net/cpanel
+Usuario: galerasn
+Contraseña: gVr26;2UyzY2Q#
+
+Información del servidor:
+
+Nombre del servidor: host41.latinoamericahosting.com
+IP del servidor: 157.90.91.29
+
+Si usted está usando un dominio existente con su nueva cuenta de hosting, no olvide actualizar los registros DNS del dominio correspondiente por los siguientes:
+
+Nameserver 1: ns41.latinoamericahosting.com (157.90.91.29)
+Nameserver 2: ns42.latinoamericahosting.com (157.90.91.18)
